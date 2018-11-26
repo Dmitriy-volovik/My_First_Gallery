@@ -1,0 +1,7 @@
+.login-form{
+    /* float: left; */
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: 20%;
+    background-color: blue;
+}

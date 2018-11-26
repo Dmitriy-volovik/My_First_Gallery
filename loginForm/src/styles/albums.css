@@ -1,0 +1,10 @@
+.main-div {
+    background-color: grey;
+    width: 100%;
+    height: 500px;
+}
+.album {
+    background-color: red;
+    width: 30%;
+    height: 100px;
+}

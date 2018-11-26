@@ -1,0 +1,14 @@
+.main-div-ph{
+    background-color: green;
+    width: 90%;
+    height: 100vh;
+    margin: 0 5%;
+    /* clear: both; */
+}
+
+.photo{
+    background-color: aqua;
+    width: 100px;
+    height: 100px;
+    /* float:left; */
+}
