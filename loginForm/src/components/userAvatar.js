@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import "../styles/avatar.css";
-// import { userStore } from "./userState";
 import {connect} from 'react-redux';
 
 class UserAvatar extends Component{

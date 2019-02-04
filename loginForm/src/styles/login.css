@@ -2,6 +2,10 @@
     /* float: left; */
     margin: 0 auto;
     box-sizing: border-box;
-    width: 20%;
-    background-color: blue;
+}
+.login-form > input{
+  margin: 25px 37%;
+}
+.login-form > h2{
+  margin-left:22%;
 }

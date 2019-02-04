@@ -1,14 +1,48 @@
 .main-div-ph{
-    background-color: green;
     width: 90%;
-    height: 100vh;
     margin: 0 5%;
-    /* clear: both; */
+
+}
+.go-to-home{
+    width: 100px;
+    height: 100px;
+}
+
+.main-over-main{
+    width: 95%;
+    margin: 0 auto;
 }
 
 .photo{
-    background-color: aqua;
-    width: 100px;
-    height: 100px;
-    /* float:left; */
+    width: 100%;
 }
+.grid{
+    display: grid;
+
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+    grid-auto-rows: 20px;
+
+}
+
+.wallpaper_img{
+    top: 0;
+    left: 0;
+    display: block;
+}
+.content{
+    position: relative;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+}
+
+ .photo .content:hover > img {
+     cursor: pointer;
+     transform: scale(1.16);
+     transition: transform .25s ease;
+ }
+ .custom-but:hover{
+     z-index: 50;
+     position: absolute;
+ }

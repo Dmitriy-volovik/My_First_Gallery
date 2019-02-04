@@ -1,0 +1,30 @@
+ .main-block-login{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    min-width: 357px;
+    width: 60%;
+    height: 60%;
+    margin-Right: -50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; 
+ background-blend-mode: multiply,multiply;
+    }
+
+.knopka{
+    border-radius: 10%;
+
+}
+
+.button-add-album{
+  cursor: pointer;
+}
+
+.exit-button{
+    float: right;
+}
+.button-registration{
+    display: inline-block;
+}

@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 // import { routerReducer } from "module";
 
 
-let loginReducer = (state, action) => { //редьюсер для боля регистрации
+let loginReducer = (state, action) => { 
     if (state === undefined) { //redux запускает редьюсер хотя бы раз, что бы инициализировать хранилище
         return { isLoggedIn: undefined, userName: 'Anonym' };  //обязательно вернуть новый объект, а не изменить текущий state
     }
@@ -34,18 +34,26 @@ let photosReducer = (state, action) => {
     }
     return state; //редьюсеров может быть несколько, в таком случае вызываются все редьюсеры, но далеко не всегда action.type будет относится к этому редьюсеру. Тогда редьюсер должен вернуть state как есть. 
 }
-
-
+let showPhotoOnAlbReducer = (state, action) => {
+    if(state === undefined) {
+        return { status: null, payload: null, error: null };
+    }
+    if (action.type === 'SET_STATUS_PHOTO_COVER') {
+        return { albums: { ...state.albums, [action.albumId]: action.payload, status: action.status, error: action.error}}
+    }
+    return state;
+}
 
 const reducers = combineReducers({ //создаем функцию-обертку, которая запустит последовательно counterReducer и booleanReducer передав им ветви c и b хранилища и обновив эти же ветви в случае нового состояния.
     loginState: loginReducer,
     fetchStatusState: fetchStatusReducer,
-    fetchStatusPhotos: photosReducer
+    fetchStatusPhotos: photosReducer,
+    showPhotoOnAlbCover: showPhotoOnAlbReducer,
 })
 
 
 
 export let userStore = createStore(reducers, applyMiddleware(thunk))
 
-//userStore.subscribe(() => console.log(userStore.getState()))
+// userStore.subscribe(() => console.log(userStore.getState()))
  // подписка на обновления store

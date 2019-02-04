@@ -1,4 +1,15 @@
 .user-avatar{
     float: right;
-    border: 2px solid grey;
+    border: 2px solid green;
+}
+.user-avatar:hover{
+    background-color: green;
+
+}
+.user-avatar:hover a{
+    color: white;
+}
+.user-avatar > a{
+    padding: 20px;
+    color: white;
 }

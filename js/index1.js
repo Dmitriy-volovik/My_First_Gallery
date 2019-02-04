@@ -1,5 +1,6 @@
 const express = require('express')
 const cors    = require('cors')
+const fs = require("fs")
 var multer = require('multer')
 
 
@@ -40,9 +41,6 @@ Photo.belongsTo(Album)
 // Album.hasOne(Cover)
 
 
-
-
-
 sequelize.sync().then( () =>
 console.log("DATA base test was created"));
 var express_graphql = require('express-graphql');
@@ -52,11 +50,14 @@ var schema = buildSchema(`
         getAlbum(id: Int!): Album
         getPhotos(id: Int!): [Photo]
         getAlbums: [Album]
+        getPhotoById(id: Int!): Photo
+        getPhotosToAlbum(id: Int!, limit: Int!): [Photo]
     }
     type Mutation {
         createAlbum(title: String!, text: String!): Album
         createPhoto(albumID: Int, originalname: String!, mimetype: String!,
              destination: String!, filename: String!, path: String!, size: Int!  ): Photo
+        deletePhoto(id: Int!): Photo
     }
     type Album {
         id: Int
@@ -81,16 +82,18 @@ var schema = buildSchema(`
         size: Int
     }
 `);
-// async function getPhoto({name}){
-//     return await Photo.findByName(name)
-// }
-
+async function getPhotosToAlbum({id, limit}){
+    let album = await Album.findById(id)
+    let photos = await album.getPhotos({limit})
+   return photos;
+}
+async function deletePhoto({id}) {
+    await Photo.destroy({where:{id}})
+}
 async function getAlbum({id}){
    return await Album.findById(id)
 }
-// async function getAlmubByPhoto(){
 
-// }
 async function getAlbums(){
 
    return await Album.findAll();
@@ -120,6 +123,10 @@ async function createPhoto({ albumID, originalname, mimetype, destination, filen
     } 
     return photo
 }
+async function getPhotoById({ id}) {
+    let photo = await Photo.findById(id)
+    return photo
+}
 
 var root = {
     createAlbum,
@@ -127,6 +134,8 @@ var root = {
     getAlbum,
     getPhotos,
     getAlbums,
+    getPhotosToAlbum,
+    deletePhoto,
 };
 
 
@@ -139,24 +148,56 @@ app.use('/graphql', express_graphql({
     graphiql: true
 }));
 
-app.use(express.static('upload'))
+app.use(express.static('my-uploads'))
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './my-uploads')
     },
-    // filename: function (req, file, cb) {
-    //     cb(null, file.fieldname + '-' + Date.now())
-    // }
+
 })
 var upload = multer({ storage: storage })
 // var upload = multer({ dest: 'upload' })
 
 app.post("/upload", upload.array('file', 50), (req, res) => {
     console.log(req.files)
-    res.status(200).send(req.files);
+    res.status(201).send(req.files);
     res.end();
 })
+
+app.get('/images/:fileName?', (req, res) => {
+    let { fileName } = req.params
+    if (fileName) {
+        let fileStream = fs.createReadStream('my-uploads' + fileName)
+        fileStream.pipe(res)
+    }
+
+})
+
+// app.get('/img', (req, res) => {
+
+
+    // let reqData = req.query.name;
+    // var responsePhoto = (async() => {
+    //     var photo = await gql.request(`query getPhotoById($id: Int!) {
+    //                     getPhotoById(id: $id) {
+    //                         mimetype,
+    //                         path
+
+    //                     }
+    //                         }
+    //                         `,{id: +req.query.id}).then(data => (console.log(data), data)).getPhoto
+    //      return photo;                   
+    // })()
+    // console.log("А это лог из Бэка" + reqData);
+    // console.log(responsePhoto)
+    // res.status(200).send(responsePhoto);
+    // res.end();
+
+    // show(req, res)
+// })
+
+
 // const storage = multer.memoryStorage();
 // const upload = multer({ storage: storage });
 // router.post("/upload", upload.single('theFile'), (req, res) => {
@@ -164,5 +205,28 @@ app.post("/upload", upload.array('file', 50), (req, res) => {
 //     res.status(200).send(true);
 //     res.end();
 // });
+
+
+// function show(request, response) {
+//     console.log("Request handler 'show' was called.");
+//     let fullPath = decodeURIComponent(request.query.path);
+//     let fullType = decodeURIComponent(request.query.mimetype);
+//     fs.readFile(fullPath, "base64", function (error, file) {
+//         if (error) {
+//             response.writeHead(500, { "Content-Type": "text/plain" });
+//             response.write(error + "\n");
+//             response.end();
+//         } else {
+//             response.writeHead(200, { "Content-Type": fullType });
+//             response.write(file, "base64");
+//             response.end();
+//         }
+//     });
+// }
+
+
+
+
+
 
 app.listen(8000)
