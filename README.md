@@ -1,4 +1,4 @@
-# simpleEventCalendar
+# Gallery
 <h2>Test project - Gallery using Express/React/Redux/Node/MySQL/GraphQL </h2>
 <p> This is my first major application. It has several drawbacks that I took into account when creating a new application. For several reasons, I can not yet make a demo link for this application. But I'm working on it. For now, you can see the work on video</p>
 <h2>This app provides the following features:</h2>	
@@ -22,5 +22,5 @@
 	<li>Make Demo</li>
 </ul>
 <h2>Link</h2>
-	<p>This project on Heroku <a href="https://simple-event-calendar1.herokuapp.com/">DEMO</a> </p>
+	<p>Soon </p>
 
