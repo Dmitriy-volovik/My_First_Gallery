@@ -11,7 +11,7 @@
 	<li>Conflicting events have the same width, and not overlap</li>
 </ul>
 <h2>VIDEO</h2>
-<img src="http://g.recordit.co/4pyYwICibW.gif" width="100%" height="100%" />
+<img src="4pyYwICibW.gif" width="100%" height="100%" />
 
 
 <h2> I'm still working on the application:</h2>
